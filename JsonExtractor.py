@@ -6,7 +6,7 @@ class JsonExtractor:
     def __init__(self,toBeParsed):
         if type(toBeParsed) != str:
            raise TypeError
-        self.data = str(toBeParsed)
+        self.data = toBeParsed
 
     def extractJson(self):
         #Iterates through data fed into class. Returns a list of jsons found in type string. If none found, list will be empty
