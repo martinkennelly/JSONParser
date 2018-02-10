@@ -1,16 +1,28 @@
-
 class JsonExtractor:
+     """Computationally poor json string search. Searches through a string to find valid JSON(s) and returns any found in a list.
+    Example:
+            sJson = "{ "name":"John", "age":31, "city":"New York" }"
+            jsonExtractor = JsonExtractor.JsonExtractor(sJson)
+            lJson = jsonExtractor.extractJson() 
+    Args: 
+        toBeParsed (str): String representation of Json syntax
+    Attributes:
+              data(str): Stores json string
+    Todo:
+        Testing: This class needs extensive testing before it can be used with any confidence.
     """
-    Computationally poor json string search. Searches through a string to find valid JSON(s) and returns any found in a list.
-    """
+   
     def __init__(self,toBeParsed):
         if type(toBeParsed) != str:
            raise TypeError
         self.data = toBeParsed
 
     def extractJson(self):
-        #Iterates through data fed into class. Returns a list of jsons found in type string. If none found, list will be empty
-
+        """Iterates through data fed into class. Returns a list of jsons found in type string. If none found, list will be empty
+        Args:
+        Returns:
+                jsonFound (list): List of jsons found, empty if none found
+        """
         startIndex = 0
         temp = -1
         jsonFound = []
@@ -21,7 +33,12 @@ class JsonExtractor:
         return jsonFound
 
     def search(self, startIndex):
-        #Recieves start index in string. Goes through each char in string. Starts search at index startIndex. Returns json match string or nothing.
+        """Recieves start index in string. Goes through each char in string. Starts search at index startIndex. Returns json match string or nothing.
+        Args: 
+            startIndex (int): index to start search 
+        Returns:
+                index (int): position where json syntax begins               
+        """
         lbCount = 0
         lbLocation = -1
         for index,letter in enumerate(self.data[startIndex:]):
@@ -36,7 +53,13 @@ class JsonExtractor:
         return None,index                                                                                       #Nothing found
 
     def syntaxcorrect(self,startIndex):
-        #Recieves start index in string. Lazily checks to see if this is correct json syntax. Checks to see if the format is two quatation marks and a colon. Returns boolean True if syntax is correct, or false if incorrect.
+        """Recieves start index in string. Lazily checks to see if this is correct json syntax. Checks to see if the format is two quatation marks and a colon. Returns boolean True if syntax is correct, or false if incorrect.
+        Args:
+            startIndex (int): Index integer for where to start
+        Returns:
+               boolean: True if syntax is correct, otherwise false.
+        """
+        
         amountToScan = 40
         if self.data[startIndex+1] != "\"":                                     #If no quotation follows { bracket then, we assume not json.
             return False
